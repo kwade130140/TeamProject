@@ -1,14 +1,112 @@
-<!DOCTYPE html>
-<html>
-<body>
+<link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+<link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+<script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
 
-<h1>Raspberry Pi video stream v0.1</h1>
+<script>
+document.addEventListener('init', function(event) {
+  var page = event.target;
 
-<p>rpi local address/port: 192.168.1.6:8081</p>
+  if (page.id === 'page1') {
+    page.querySelector('#push-button').onclick = function() {
+      document.querySelector('#myNavigator').pushPage('page2.html', {data: {title: 'Page 2'}});
+    };
+  } else if (page.id === 'page2') {
+    page.querySelector('ons-toolbar .center').innerHTML = page.data.title;
+  }
+});
+</script>
 
-<!-- use localhost:8081 or the ip address of the pi to get the stream -->
-<img src= "http://192.168.1.6:8081/?action=stream" width="800" height="460"/>
+<ons-navigator swipeable id="myNavigator" page="page1.html"></ons-navigator>
 
+<template id="page1.html">
+  <ons-page id="page1">
+    <ons-toolbar>
+      <div class="center">Raspberry Pi Video Stream v. 1.0</div>
+    </ons-toolbar>
 
-</body>
-</html>
+	<img src= "http://192.168.1.5:8081/?action=stream" alt="Onsen UI" style="width: 100%"/>
+	
+	<ons-list>
+		
+		<ons-list-item>
+			<div class="center">
+				System Enable
+			  </div>
+			  <div class="right">
+				<ons-switch checked id="start"></ons-switch>
+			  </div>
+		</ons-list-item>
+		
+		
+		<ons-list-header>View Camera:</ons-list-header>
+		
+		<ons-list-item tappable>
+			<label class="left">
+				<ons-radio name="camera" input-id="radio-2" checked></ons-radio>
+			</label>
+			<label for="radio-2" class="center">
+				Main
+			</label>
+		</ons-list-item>
+		<ons-list-item tappable>
+			<label class="left">
+				<ons-radio name="camera" input-id="radio-3" checked></ons-radio>
+			</label>
+			<label for="radio-3" class="center">
+				Rear
+			</label>
+		</ons-list-item>
+		<ons-list-item tappable>
+			<label class="left">
+				<ons-radio name="camera" input-id="radio-4" checked></ons-radio>
+			</label>
+			<label for="radio-4" class="center">
+				Right Side
+			</label>
+		</ons-list-item>
+		<ons-list-item tappable>
+			<label class="left">
+				<ons-radio name="camera" input-id="radio-5" checked></ons-radio>
+			</label>
+			<label for="radio-5" class="center">
+				Left Side
+			</label>
+		</ons-list-item>
+		<ons-list-item tappable>
+			<label class="left">
+				<ons-radio name="camera" input-id="radio-1" checked></ons-radio>
+			</label>
+			<label for="radio-1" class="center">
+				Round Robin
+			</label>
+		</ons-list-item>
+		
+		<ons-list-header>Round Robin Interval</ons-list-header>
+		<ons-row>
+			<ons-col width="40px" style="text-align: center; line-height: 50px;">min</ons-col>
+			<ons-col>
+				<ons-list-item>
+					<ons-range style="width: 90%;" value="25"></ons-range>
+				</ons-list-item>
+			</ons-col>
+			<ons-col width="40px" style="text-align: center;  line-height: 50px;">max</ons-col>
+		</ons-row>
+		
+		<ons-list-item>
+			<ons-button id="push-button">Next</ons-button>
+		</ons-list-item>
+	</ons-list>
+  </ons-page>
+</template>
+
+<template id="page2.html">
+  <ons-page id="page2">
+    <ons-toolbar>
+      <div class="left"><ons-back-button>Back</ons-back-button></div>
+      <div class="center"></div>
+    </ons-toolbar>
+
+    <p>Test</p>
+  </ons-page>
+</template>
+
