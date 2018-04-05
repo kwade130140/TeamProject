@@ -4,21 +4,22 @@
 
 #define PIR1 1
 #define PIR2 7
-#define LED 0
+#define PIR3 4
+#define PIR4 13
 
 //Test comment
 int main(void) {
 	wiringPiSetup();
 	pinMode (PIR1, INPUT);
 	pinMode (PIR2, INPUT);
-	pinMode (LED, OUTPUT);
-
-	printf("Pin: %d for LED and Pin: %d for IR1 and Pin: %d for IR2 \n", LED, PIR1, PIR2);
-
-	digitalWrite(LED, LOW);
+	pinMode (PIR3, INPUT);
+	pinMode (PIR4, INPUT);
 
 	printf("Calibrating... \n");
-	while(digitalRead(PIR1) == 1 || digitalRead(PIR2) == 1) {
+	while(digitalRead(PIR1) == 1 
+			|| digitalRead(PIR2) == 1
+			|| digitalRead(PIR3) == 1
+			|| digitalRead(PIR4) == 1) {
 		delay (2000);
 	}
 
@@ -31,36 +32,42 @@ int main(void) {
 		int read2 = digitalRead(PIR2);
 
 		if(read1 == 1) {
-			digitalWrite (LED, HIGH);
 			system("sudo service motion start");
 			printf("Starting stream... \n");
 			delay(1000);
 			printf("Opening stream \n");
 			system("sensible-browser http://localhost:8081");
 			inactive = 0;
-			digitalWrite (LED, LOW);
-
 		}
 		else if(read2 == 1) {
-			digitalWrite (LED, HIGH);
 			system("sudo service motion start");
 			printf("Starting stream... \n");
 			delay(1000);
 			printf("Opening stream \n");
-			system("sensible-browser http://localhost:8082");
+			system("sensible-browser http://localhost:8081");
 			inactive = 0;
-			digitalWrite (LED, LOW);
+		}
+		else if(read3 == 1) {
+			system("sudo service motion start");
+			printf("Starting stream... \n");
+			delay(1000);
+			printf("Opening stream \n");
+			system("sensible-browser http://localhost:8081");
+			inactive = 0;
+		}
+		else if(read4 == 1) {
+			system("sudo service motion start");
+			printf("Starting stream... \n");
+			delay(1000);
+			printf("Opening stream \n");
+			system("sensible-browser http://localhost:8081");
+			inactive = 0;
 		}
 
 		delay (500);
-
-		printf("IR Sensor1: %d \n", read1);
-		printf("IR Sensor2: %d \n", read2);
-
 	}
 
 	printf("Exiting... \n");
 	system("sudo service motion stop");
-	digitalWrite(LED, LOW);
 	return 0;
 }
