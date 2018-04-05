@@ -6,6 +6,7 @@
 #define PIR2 7
 #define LED 0
 
+//Test comment
 int main(void) {
 	wiringPiSetup();
 	pinMode (PIR1, INPUT);
