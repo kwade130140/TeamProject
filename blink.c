@@ -7,7 +7,7 @@
 #define PIR3 5
 #define PIR4 14
 
-//Test comment
+
 int main(void) {
 	wiringPiSetup();
 	pinMode (PIR1, INPUT);
@@ -45,7 +45,7 @@ int main(void) {
 		else if(read2 == 1) {
 			system("sudo uv4l restart");
 			printf("Starting stream... \n");
-			system("sudo uv4l --driver uvc --device-path 001:007");
+			system("sudo uv4l --driver uvc --device-path 001:006");
 			delay(1000);
 			printf("Opening stream \n");
 			system("sensible-browser http://localhost:8080/stream");
@@ -54,7 +54,7 @@ int main(void) {
 		else if(read3 == 1) {
 			system("sudo uv4l restart");
 			printf("Starting stream... \n");
-			system("sudo uv4l --driver uvc --device-path 001:007");
+			system("sudo uv4l --driver uvc --device-path 001:005");
 			delay(1000);
 			printf("Opening stream \n");
 			system("sensible-browser http://localhost:8080/stream");
@@ -63,7 +63,7 @@ int main(void) {
 		else if(read4 == 1) {
 			system("sudo uv4l restart");
 			printf("Starting stream... \n");
-			system("sudo uv4l --driver uvc --device-path 001:007");
+			system("sudo uv4l --driver uvc --device-path 001:004");
 			delay(1000);
 			printf("Opening stream \n");
 			system("sensible-browser http://localhost:8080/stream");
@@ -72,6 +72,30 @@ int main(void) {
 
 		delay (500);
 		printf("Read1: %d, Read2: %d, Read3: %d, Read4: %d\n", read1, read2, read3, read4);
+	}
+
+	while(inactive == 1) {
+
+		int read1 = digitalRead(PIR1);
+		int read2 = digitalRead(PIR2);
+		int read3 = digitalRead(PIR3);
+		int read4 = digitalRead(PIR4);
+
+		if(read1 == 1) {
+
+		}
+		else if(read2 == 1) {
+
+		}
+		else if(read3 == 1) {
+
+		}
+		else if(read4 == 1) {
+
+		}
+
+		delay (500);
+		printf("Streaming - Read1: %d, Read2: %d, Read3: %d, Read4: %d\n", read1, read2, read3, read4);
 	}
 
 	printf("Exiting... \n");
