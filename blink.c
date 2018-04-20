@@ -24,6 +24,7 @@ int main(void) {
 	}
 
 	printf("Finished calibrating \n");
+	system("sudo rm -rf /dev/uv4l");
 
 	int inactive = 1;
 	while(inactive == 1) {
@@ -43,21 +44,21 @@ int main(void) {
 		else if(read2 == 1) {
 			system("sudo uv4l restart");
 			printf("Starting stream... \n");
-			system("sudo uv4l --driver uvc --device-path 001:006");
+			system("sudo uv4l --driver uvc --device-path 001:004");
 			delay (1000);
 			inactive = 0;
 		}
 		else if(read3 == 1) {
 			system("sudo uv4l restart");
 			printf("Starting stream... \n");
-			system("sudo uv4l --driver uvc --device-path 001:006");
+			system("sudo uv4l --driver uvc --device-path 001:005");
 			delay (1000);
 			inactive = 0;
 		}
 		else if(read4 == 1) {
 			system("sudo uv4l restart");
 			printf("Starting stream... \n");
-			system("sudo uv4l --driver uvc --device-path 001:006");
+			system("sudo uv4l --driver uvc --device-path 001:008");
 			delay (1000);
 			inactive = 0;
 		}
@@ -74,18 +75,26 @@ int main(void) {
 
 		switch(streamNo) {
 		case 0:
-			system("sudo uv4l --driver uvc --device-path 001:006");
+			system("sudo pkill uv4l");
+			system("sudo rm -rf /dev/uv4l");
+			system("sudo uv4l --driver uvc --device-path 001:004");
 			streamNo = 1;
 			break;
 		case 1:
-			system("sudo uv4l --driver uvc --device-path 001:006");
+			system("sudo pkill uv4l");
+			system("sudo rm -rf /dev/uv4l");
+			system("sudo uv4l --driver uvc --device-path 001:005");
 			streamNo = 2;
 			break;
 		case 2:
-			system("sudo uv4l --driver uvc --device-path 001:006");
+			system("sudo pkill uv4l");
+			system("sudo rm -rf /dev/uv4l");
+			system("sudo uv4l --driver uvc --device-path 001:008");
 			streamNo = 3;
 			break;
 		case 3:
+			system("sudo pkill uv4l");
+			system("sudo rm -rf /dev/uv4l");
 			system("sudo uv4l --driver raspicam --width 640 --height 480 --framerate 10 --server-option '--port=8080'");
 			streamNo = 0;
 			break;
